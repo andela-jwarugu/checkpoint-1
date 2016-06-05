@@ -8,7 +8,7 @@ function Index(){
 		// console.log(fileContents.split(' '));
 		// })
 		this.fileContents = require(filePath);
-		return JSON.stringfy(this.fileContents);
+		return this.fileContents;
 	}
 
 	this.getIndex = function(){
