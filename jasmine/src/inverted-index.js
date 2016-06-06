@@ -3,6 +3,7 @@ function Index(){
 
 	this.fileContents = [];
 	this.invertedIndex = {};
+	//this.position = [];
 
 	this.createIndex = function(){
 		//read file contents and convert JSON to string then change case and split into words
@@ -20,15 +21,11 @@ function Index(){
 
 		var str = '';
 		for(var i = 0; i<arr.length; i++){
-			//console.log(i);
 			var obj = arr[i];
-			var keys = Object.keys(obj);
-			//console.log(keys);
+			var keys = Object.keys(obj).map(function(key){
+				str += (obj[key]);
+			});
 			
-			for(var j = 0; j < keys.length; j++) {
-				//console.log(j + ': ' + obj[keys[j]]);
-				str += obj[keys[j]] + ' ';
-			}
 		this.formatContent(str);
 		//console.log(str);
 		}
@@ -36,19 +33,11 @@ function Index(){
 	}
 
 	this.formatContent = function(content){
-		// console.log(this.fileContents);
-		// console.log(this.invertedIndex);
 		this.fileContents = content.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '').toLowerCase().split(' ');
+
 		for(var i=0; i<this.fileContents.length ;i++){
-			//console.log(this.invertedIndex);
 			this.invertedIndex[this.fileContents[i]] = "";
 		}
-		// this.fileContents.forEach(function(item){
-		// 	console.log(this.invertedIndex);
-		// 	this.invertedIndex[item] = "";
-		// });
-		// return this.fileContents;
-
 	}
 
 	this.getIndex = function(){
