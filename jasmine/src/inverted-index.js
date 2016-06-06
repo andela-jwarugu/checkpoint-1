@@ -3,7 +3,6 @@ function Index(){
 
 	this.fileContents = [];
 	this.invertedIndex = {};
-	//this.position = [];
 
 	this.createIndex = function(){
 		//read file contents and convert JSON to string then change case and split into words
@@ -19,24 +18,29 @@ function Index(){
 		}
 		];
 
-		var str = '';
 		for(var i = 0; i<arr.length; i++){
+		
+			var str = '';
 			var obj = arr[i];
-			var keys = Object.keys(obj).map(function(key){
-				str += (obj[key]);
+			Object.keys(obj).map(function(key){
+				str += ' ' + (obj[key]);
 			});
-			
-		this.formatContent(str);
-		//console.log(str);
+
+			this.formatContent(str,i);
 		}
+		console.log(str);
 		
 	}
 
-	this.formatContent = function(content){
+	this.formatContent = function(content, index){
 		this.fileContents = content.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '').toLowerCase().split(' ');
 
 		for(var i=0; i<this.fileContents.length ;i++){
-			this.invertedIndex[this.fileContents[i]] = "";
+			if(this.invertedIndex[this.fileContents[i]]) {
+				this.invertedIndex[this.fileContents[i]].push(index);
+			} else {
+				this.invertedIndex[this.fileContents[i]] = [index];
+			}
 		}
 	}
 
