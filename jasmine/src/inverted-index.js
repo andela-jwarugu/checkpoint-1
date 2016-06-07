@@ -3,6 +3,7 @@ function Index(){
 
 	this.fileContents = [];
 	this.invertedIndex = {};
+	this.searchResults = [];
 
 	this.createIndex = function(){
 		//read file contents and convert JSON to string then change case and split into words
@@ -25,10 +26,9 @@ function Index(){
 			Object.keys(obj).map(function(key){
 				str += ' ' + (obj[key]);
 			});
-
 			this.formatContent(str,i);
+			
 		}
-		console.log(str);
 		
 	}
 
@@ -53,13 +53,16 @@ function Index(){
 		var stopString = "\\b" + stopWords.toString().replace(/\,/gi,"\\b|\\b") + "\\b";
 		var re = new RegExp(stopString,"gi");
 
-		this.fileContents = content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/gi, '').replace(re, '').replace(/\s(?=\s)/gi, "").trim().toLowerCase().split(' ');
+		var doc = content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/gi, '').replace(re, '').replace(/\s(?=\s)/gi, "").trim().toLowerCase().split(' ');
+		this.fileContents.push(doc);
 
-		for(var i=0; i<this.fileContents.length ;i++){
-			if(this.invertedIndex[this.fileContents[i]]) {
-				this.invertedIndex[this.fileContents[i]].push(index);
+		for(var i=0; i<doc.length ;i++){
+			if(this.invertedIndex[doc[i]]) {
+				if(this.invertedIndex[doc[i]].indexOf(index) === -1) {
+					this.invertedIndex[doc[i]].push(index);
+				}
 			} else {
-				this.invertedIndex[this.fileContents[i]] = [index];
+				this.invertedIndex[doc[i]] = [index];
 			}
 		}
 	}
@@ -67,9 +70,31 @@ function Index(){
 	this.getIndex = function(){
 		console.log(this.invertedIndex);		
 	}
+
+	this.searchIndex = function(searchItems){
+		
+		var results = [];
+		
+		for (var i=0; i<searchItems.length; i++){
+			Object.keys(this.invertedIndex).map(function(key){
+				if(searchItems[i] ==key){
+					results.push(key);
+				}
+			})
+		}
+		
+		if (results.length>0){
+			console.log("Match: " + results + " is in the document");
+		} else{
+			console.log("Try harder");
+			//return -1;
+		} 
+
+	}
 }
 
 var indexObj = new Index();
 indexObj.createIndex();
-indexObj.getIndex();
+//indexObj.getIndex();
+indexObj.searchIndex(["alice", "governor", "wonderland", "lord", "rings"]);
 
