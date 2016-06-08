@@ -18,6 +18,12 @@ function Index(){
 		"text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
 		}
 		];
+		// fetch('/books.json').then(function(data){
+		// 	data.json();
+		// }).then(function(books){
+		// 	JSON.parse(books);
+		// 	console.log(books);
+		// });
 
 		for(var i = 0; i<arr.length; i++){
 		
@@ -53,7 +59,8 @@ function Index(){
 		var stopString = "\\b" + stopWords.toString().replace(/\,/gi,"\\b|\\b") + "\\b";
 		var re = new RegExp(stopString,"gi");
 
-		var doc = content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/gi, '').replace(re, '').replace(/\s(?=\s)/gi, "").trim().toLowerCase().split(' ');
+		var doc = content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/gi, '').replace(re, '').replace(/\s{2,}/gi, "").trim().toLowerCase().split(' ');
+		//replace(/\s(?=\s)/gi, "")
 		this.fileContents.push(doc);
 
 		for(var i=0; i<doc.length ;i++){
@@ -95,6 +102,6 @@ function Index(){
 
 var indexObj = new Index();
 indexObj.createIndex();
-//indexObj.getIndex();
-indexObj.searchIndex(["alice", "governor", "wonderland", "lord", "rings"]);
+indexObj.getIndex();
+//indexObj.searchIndex(["alice", "governor", "wonderland", "lord", "rings"]);
 
