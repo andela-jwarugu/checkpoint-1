@@ -1,40 +1,23 @@
 module.exports = function Index(){
 	'use strict'
 
-	
-
 	this.fileContents = [];
 	this.invertedIndex = {};
 	this.searchResults = [];
-	// window.getBookData = function(filePath) {
-	// 	console.log($.getJSON(filePath)); 
-	// 	console.log('hi');
-	// }
-
+	
 	this.createIndex = function(){
 		//read file contents and convert JSON to string then change case and split into words
-		// var arr = [
-		// {
-		// "title": "Alice in Wonderland",
-		// "text": "Alice falls into a rabbit hole and enters a world full of imagination."
-		// },
-
-		// {
-		// "title": "The Lord of the Rings: The Fellowship of the Ring.",
-		// "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
-		// }
-		// ];
-
+		
 		var arr = require('../books.json');
 		
-		fetch('../books.json').then(function(response){
-			arr = response.json();
-		}).then(function(){
-			//JSON.parse(books);
-			// console.log("This is the data: " + data);
-			// console.log("whaat");
-			// return data;
-		});
+		// fetch('../books.json').then(function(response){
+		// 	arr = response.json();
+		// }).then(function(){
+		// 	//JSON.parse(books);
+		// 	// console.log("This is the data: " + data);
+		// 	// console.log("whaat");
+		// 	// return data;
+		// });
 
 		for(var i = 0; i<arr.length; i++){
 		
@@ -69,10 +52,9 @@ module.exports = function Index(){
 
 		var stopString = "\\b" + stopWords.toString().replace(/\,/gi,"\\b|\\b") + "\\b";
 		var re = new RegExp(stopString,"gi");
-
 		var doc = content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/gi, '').replace(re, '').replace(/\s(?=\s)/gi, "").trim().toLowerCase().split(' ');
-		//replace(/\s(?=\s)/gi, "")
-		this.fileContents.push(doc);
+		
+    this.fileContents.push(doc);
 
 		for(var i=0; i<doc.length ;i++){
 			if(this.invertedIndex[doc[i]]) {
@@ -111,9 +93,3 @@ module.exports = function Index(){
 	}
 
 }
-
-// var indexObj = new Index();
-// // 	indexObj.getBookData('../books.json');
-// indexObj.createIndex();
-// indexObj.getIndex();
-// 	// indexObj.searchIndex(["alice", "governor", "wonderland", "lord", "rings"]);
