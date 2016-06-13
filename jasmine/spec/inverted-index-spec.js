@@ -1,3 +1,6 @@
+var Index = require('../src/inverted-index');
+
+
 describe('indexObj', function(){
 	var indexObj = new Index;
 	describe('createIndex', function(){
@@ -18,7 +21,19 @@ describe('indexObj', function(){
 	// 	it('returns a stirng of file contents',function(){
 	// 		expect(indexObj.getIndex().toBe(typeof(String)));
 	// 	})
-	// })
-})
+// 	// })
+// 	// var indexObj = new Index();
+// 	// indexObj.getBookData('../books.json');
+// 	// indexObj.createIndex();
+// 	// indexObj.getIndex();
+// 	// indexObj.searchIndex(["alice", "governor", "wonderland", "lord", "rings"]);
+// })
 
 
+// var index = new Index();
+
+// describe("Test", function(){
+// 	it("checks whether json is empty", function(){
+// 		expect (index.fileContents).toBe(null)
+// 	});
+});
