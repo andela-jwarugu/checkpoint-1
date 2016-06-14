@@ -1,36 +1,38 @@
-module.exports = function Index(){
-	'use strict'
+function Index(){
+//module.exports = function Index(){
+  'use strict'
 
-	this.fileContents = [];
-	this.invertedIndex = {};
-	this.searchResults = [];
-	
-	this.createIndex = function(){
-		//read file contents and convert JSON to string then change case and split into words
-		
-		var arr = require('../books.json');
-		
-		// fetch('../books.json').then(function(response){
-		// 	arr = response.json();
-		// }).then(function(){
-		// 	//JSON.parse(books);
-		// 	// console.log("This is the data: " + data);
-		// 	// console.log("whaat");
-		// 	// return data;
-		// });
+  this.fileContents = [];
+  this.invertedIndex = {};
+  this.searchResults = [];
+  this.arr = [];
 
-		for(var i = 0; i<arr.length; i++){
-		
-			var str = '';
-			var obj = arr[i];
-			Object.keys(obj).map(function(key){
-				str += ' ' + (obj[key]);
-			});
-			this.formatContent(str,i);
-			
-		}
-		
-	}
+  this.createIndex = function(){
+  	//read file contents and convert JSON to string then change case and split into words
+    //return a new promise(fetch)
+  return fetch('/jasmine/books.json').then(function(response){
+      return response.json();
+      var self = this;
+  	}).then(function(data){
+      self.arr = data;
+  		console.log("Data: " + data);
+
+  	}).catch(function(error){
+      console.log("Error that occurred: " + error);
+    });
+
+  	for(var i = 0; i<this.arr.length; i++){
+
+  		var str = '';
+  		var obj = this.arr[i];
+  		Object.keys(obj).map(function(key){
+  			str += ' ' + (obj[key]);
+  		});
+  		this.formatContent(str,i);
+
+  	}
+
+  }
 
 	this.formatContent = function(content, index){
 		//Stop words from http://www.ranks.nl/stopwords
@@ -53,7 +55,7 @@ module.exports = function Index(){
 		var stopString = "\\b" + stopWords.toString().replace(/\,/gi,"\\b|\\b") + "\\b";
 		var re = new RegExp(stopString,"gi");
 		var doc = content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/gi, '').replace(re, '').replace(/\s(?=\s)/gi, "").trim().toLowerCase().split(' ');
-		
+
     this.fileContents.push(doc);
 
 		for(var i=0; i<doc.length ;i++){
@@ -68,13 +70,14 @@ module.exports = function Index(){
 	}
 
 	this.getIndex = function(){
-		console.log(this.invertedIndex);		
+    this.invertedIndex.toString();
+		console.log(this.invertedIndex);
 	}
 
 	this.searchIndex = function(searchItems){
-		
+
 		var results = [];
-		
+
 		for (var i=0; i<searchItems.length; i++){
 			Object.keys(this.invertedIndex).map(function(key){
 				if(searchItems[i] ==key){
@@ -82,13 +85,13 @@ module.exports = function Index(){
 				}
 			})
 		}
-		
+
 		if (results.length>0){
 			console.log("Match: " + results + " is in the document");
 		} else{
 			console.log("Try harder");
 			//return -1;
-		} 
+		}
 
 	}
 
