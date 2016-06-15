@@ -1,10 +1,8 @@
-describe('indexObj', function(){
-	var testObj = new Index(), filepath = "/jasmine/books.json";
-
-
+describe('testObj', function(){
+	var testObj = new Index(), path = "/jasmine/books.json";
 
 	beforeEach(function(done){
-    testObj.createIndex(filepath).then(function(data){
+    testObj.createIndex(path).then(function(data){
 			testObj.arr = data;
       done();
     });
@@ -17,13 +15,13 @@ describe('indexObj', function(){
 		});
 	});
 
- describe('getIndex', function(){
+	describe('getIndex', function(){
 
  	it('returns an object of file contents',function(){
  		expect(typeof testObj.getIndex()).toBe('object');
- 	});
+	 	});
+	});
 
-});
 // indexObj.searchIndex(["alice", "governor", "wonderland", "lord", "rings"]);
 
 })

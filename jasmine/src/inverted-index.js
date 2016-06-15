@@ -7,16 +7,15 @@ function Index(){
   this.searchResults = [];
   //this.arr = [];
 
-  this.createIndex = function(){
+  this.createIndex = function(filepath){
   	//read file contents and convert JSON to string then change case and split into words
     //return a new promise(fetch)
-  return fetch('/jasmine/books.json').then(function(response){
-      return response.json();
-      //var self = this;
+  return fetch(filepath).then(function(response){
+      return response.text();
+      var self = this;
   	}).then(function(data){
-      self.arr = data;
-  		console.log("Data: " + data);
-
+      self.arr = JSON.parse(data);
+      return self.arr;
   	}).catch(function(error){
       console.log("Error that occurred: " + error);
     });
