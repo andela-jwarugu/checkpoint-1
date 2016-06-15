@@ -5,14 +5,14 @@ function Index(){
   this.fileContents = [];
   this.invertedIndex = {};
   this.searchResults = [];
-  this.arr = [];
+  //this.arr = [];
 
   this.createIndex = function(){
   	//read file contents and convert JSON to string then change case and split into words
     //return a new promise(fetch)
   return fetch('/jasmine/books.json').then(function(response){
       return response.json();
-      var self = this;
+      //var self = this;
   	}).then(function(data){
       self.arr = data;
   		console.log("Data: " + data);
@@ -70,8 +70,7 @@ function Index(){
 	}
 
 	this.getIndex = function(){
-    this.invertedIndex.toString();
-		console.log(this.invertedIndex);
+		return this.invertedIndex;
 	}
 
 	this.searchIndex = function(searchItems){
