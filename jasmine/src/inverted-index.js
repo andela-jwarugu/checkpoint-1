@@ -1,15 +1,13 @@
 function Index(){
-//module.exports = function Index(){
   'use strict'
 
   this.fileContents = [];
   this.invertedIndex = {};
   this.searchResults = [];
-  //this.arr = [];
 
-  this.createIndex = function(filepath){
+  this.readIndex = function(filepath){
   	//read file contents and convert JSON to string then change case and split into words
-    //return a new promise(fetch)
+    //returns a new promise(fetch)
   return fetch(filepath).then(function(response){
       return response.text();
       var self = this;
@@ -17,23 +15,13 @@ function Index(){
       self.arr = JSON.parse(data);
       return self.arr;
   	}).catch(function(error){
-      console.log("Error that occurred: " + error);
+      console.log('Error that occurred: ' + error);
     });
 
-  	for(var i = 0; i<this.arr.length; i++){
-
-  		var str = '';
-  		var obj = this.arr[i];
-  		Object.keys(obj).map(function(key){
-  			str += ' ' + (obj[key]);
-  		});
-  		this.formatContent(str,i);
-
-  	}
 
   }
 
-	this.formatContent = function(content, index){
+	this.createIndex = function(content, index){
 		//Stop words from http://www.ranks.nl/stopwords
 		var stopWords = ["a","about","above","after","again","against","all","am","an","and","any","are","aren\'t",
 						"as","at","be","because","been","before","being","below","between","both","but","by","can\'t",
@@ -69,6 +57,19 @@ function Index(){
 	}
 
 	this.getIndex = function(){
+
+    for(var i = 0; i<this.arr.length; i++){
+      // console.log('Array: ' + i);
+  		var str = '';
+  		var obj = this.arr[i];
+
+  		Object.keys(obj).map(function(key){
+  			str += ' ' + (obj[key]);
+  		});
+  		this.createIndex(str,i);
+
+  	}
+
 		return this.invertedIndex;
 	}
 
