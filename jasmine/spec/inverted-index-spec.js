@@ -3,27 +3,30 @@
 var testObj = new Index(), path = '/jasmine/books.json';
 
 beforeEach(function(done){
-  testObj.readIndex(path).then(function(data){
+  testObj.createIndex(path).then(function(data){
 		testObj.arr = data;
     done();
   });
 });
 
-describe('createIndex', function(){
+describe('Read book data', function(){
 
 	it('reads json file and asserts file is not empty', function(){
-
 		expect(testObj.arr.length).not.toBe(0);
-		//expect()
 	});
 });
 
-describe('getIndex', function(){
+describe('Populate index', function(){
 
- 	it('returns an object of file contents',function(){
+ 	it('ensures that an index object is created',function(){
  		expect(typeof testObj.getIndex()).toBe('object');
-		//expect(testObj.invertedIndex[])
  	});
+
+	it('ensures that index created is correct', function(){
+		expect(testObj.invertedIndex['alice']).toEqual([0]);
+		expect(testObj.invertedIndex['lord']).toEqual([1]);
+		expect(testObj.invertedIndex['joy']).toBe(-1);
+	});
 });
 
 // describe('searchIndex', function(){

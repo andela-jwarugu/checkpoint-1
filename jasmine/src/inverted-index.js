@@ -5,7 +5,7 @@ function Index(){
   this.invertedIndex = {};
   this.searchResults = [];
 
-  this.readIndex = function(filepath){
+  this.createIndex = function(filepath){
   	//read file contents and convert JSON to string then change case and split into words
     //returns a new promise(fetch)
   return fetch(filepath).then(function(response){
@@ -21,7 +21,7 @@ function Index(){
 
   }
 
-	this.createIndex = function(content, index){
+	this.formatContent = function(content, index){
 		//Stop words from http://www.ranks.nl/stopwords
 		var stopWords = ["a","about","above","after","again","against","all","am","an","and","any","are","aren\'t",
 						"as","at","be","because","been","before","being","below","between","both","but","by","can\'t",
@@ -66,7 +66,7 @@ function Index(){
   		Object.keys(obj).map(function(key){
   			str += ' ' + (obj[key]);
   		});
-  		this.createIndex(str,i);
+  		this.formatContent(str,i);
 
   	}
 
