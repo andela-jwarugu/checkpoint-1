@@ -14,6 +14,7 @@ describe('testObj', function(){
 		beforeEach(function(done){
 		  testObj.createIndex(path).then(function(data){
 				testObj.arr = data;
+				testObj.getIndex();
 		    done();
 		  });
 		});
@@ -40,13 +41,12 @@ describe('testObj', function(){
 			});
 		});
 
-		// describe('searchIndex', function(){st
-		// 	testObj.searchIndex(['alice', 'governor']);
-		//
-		// 	it('ensures the correct results when searched', function(){
-		// 		//expect(testObj.searchIndex(['alice']).toBe())
-		// 	});
-		// });
+		describe('searchIndex', function(){
+
+			it('ensures the correct results when searched', function(){
+				expect(testObj.searchIndex(['alice', 'lord'])).toEqual([0,1]);
+				expect(testObj.searchIndex('alice', 'lord', 'joy')).toEqual([0, 1, -1]);
+			});
+		});
 	});
-	// indexObj.searchIndex(["alice", "governor", "wonderland", "lord", "rings"]);
 })

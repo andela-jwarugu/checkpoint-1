@@ -18,7 +18,7 @@ function Index(){
     });
   }
 
-	this.formatContent = function(content, index){
+	this.formatContent = function(content){
 		//Stop words from http://www.ranks.nl/stopwords
 		var stopWords = ["a","about","above","after","again","against","all","am","an","and","any","are","aren\'t",
 						"as","at","be","because","been","before","being","below","between","both","but","by","can\'t",
@@ -39,56 +39,82 @@ function Index(){
 		var stopString = "\\b" + stopWords.toString().replace(/\,/gi,"\\b|\\b") + "\\b";
 		var re = new RegExp(stopString,"gi");
 		var doc = content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/gi, '').replace(re, '').replace(/\s(?=\s)/gi, "").trim().toLowerCase().split(' ');
+    return doc;
 
-		for(var i=0; i<doc.length ;i++){
-			if(this.invertedIndex[doc[i]]){
-				if(this.invertedIndex[doc[i]].indexOf(index) === -1) {
-					this.invertedIndex[doc[i]].push(index);
-				}
-			} else {
-				this.invertedIndex[doc[i]] = [index];
-			}
-		}
-	}
+  }
 
 	this.getIndex = function(){
 
-    for(var i = 0; i<this.arr.length; i++){
-    
+    for(var index = 0; index<this.arr.length; index++){
+
   		var str = '';
-  		var obj = this.arr[i];
+  		var obj = this.arr[index];
 
   		Object.keys(obj).map(function(key){
   			str += ' ' + (obj[key]);
   		});
-  		this.formatContent(str,i);
-  	};
 
-		return this.invertedIndex;
-	}
+      var doc = this.formatContent(str);
+
+      for(var i=0; i<doc.length ;i++){
+        if(this.invertedIndex[doc[i]]){
+          if(this.invertedIndex[doc[i]].indexOf(index) === -1) {
+            this.invertedIndex[doc[i]].push(index);
+          }
+        } else {
+          this.invertedIndex[doc[i]] = [index];
+        }
+      }
+    }
+    	return this.invertedIndex;
+  	};
 
 	this.searchIndex = function(searchItems){
-
+    console.log(typeof searchItems);
 		var results = [];
-    if (typeof searchItems == 'array'){
+    var self = this;
+    if (Array.isArray(searchItems)){
+
       for (var i=0; i<searchItems.length; i++){
   			Object.keys(this.invertedIndex).map(function(key){
-  				if(searchItems[i] ==key){
-  					results.push(key);
-  				};
-  			});
-  		}
 
-  		if (results.length>0){
-  			console.log("Match: " + results + " is in the document");
-  		} else{
-  			console.log("Try harder");
-  			//return -1;
-  		};
-  	};
-    else if(typeof searchIndex == 'string'){
-      searchIndex.split(' ');
+  				if (searchItems[i] ==key){
+            if (self.invertedIndex[searchItems[i]].length === 1){
+                results.push(self.invertedIndex[key][0]);
+            }else{
+              results.push(self.invertedIndex[key]);
+            }
+            }
+  				});
+  		}
+  	}
+    else if (typeof searchItems == 'string'){
+      console.log(arguments);
+      var arg = arguments;
+      for(var i=0; i<arg.length; i++){
+
+        var notfound = true;
+        Object.keys(this.invertedIndex).map(function(key){
+            console.log(arg[i]);
+            if (arg[i] == key){
+              notfound = false;
+              if (self.invertedIndex[arg[i]].length === 1){
+                	results.push(self.invertedIndex[key][0]);
+              }else{
+                results.push(self.invertedIndex[key]);
+              }
+            }
+        });
+        if (notfound) {
+          results.push(-1);
+        }
+      }
     }
+    else{
+      results.push(-1);
+    }
+    console.log(results);
+    return results;
   }
 
 }
