@@ -1,7 +1,6 @@
 function Index(){
   'use strict'
 
-  this.fileContents = [];
   this.invertedIndex = {};
   this.searchResults = [];
 
@@ -17,8 +16,6 @@ function Index(){
   	}).catch(function(error){
       console.log('Error that occurred: ' + error);
     });
-
-
   }
 
 	this.formatContent = function(content, index){
@@ -43,10 +40,8 @@ function Index(){
 		var re = new RegExp(stopString,"gi");
 		var doc = content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/gi, '').replace(re, '').replace(/\s(?=\s)/gi, "").trim().toLowerCase().split(' ');
 
-    this.fileContents.push(doc);
-
 		for(var i=0; i<doc.length ;i++){
-			if(this.invertedIndex[doc[i]]) {
+			if(this.invertedIndex[doc[i]]){
 				if(this.invertedIndex[doc[i]].indexOf(index) === -1) {
 					this.invertedIndex[doc[i]].push(index);
 				}
@@ -59,7 +54,7 @@ function Index(){
 	this.getIndex = function(){
 
     for(var i = 0; i<this.arr.length; i++){
-      // console.log('Array: ' + i);
+    
   		var str = '';
   		var obj = this.arr[i];
 
@@ -67,8 +62,7 @@ function Index(){
   			str += ' ' + (obj[key]);
   		});
   		this.formatContent(str,i);
-
-  	}
+  	};
 
 		return this.invertedIndex;
 	}
@@ -76,22 +70,25 @@ function Index(){
 	this.searchIndex = function(searchItems){
 
 		var results = [];
+    if (typeof searchItems == 'array'){
+      for (var i=0; i<searchItems.length; i++){
+  			Object.keys(this.invertedIndex).map(function(key){
+  				if(searchItems[i] ==key){
+  					results.push(key);
+  				};
+  			});
+  		}
 
-		for (var i=0; i<searchItems.length; i++){
-			Object.keys(this.invertedIndex).map(function(key){
-				if(searchItems[i] ==key){
-					results.push(key);
-				}
-			})
-		}
-
-		if (results.length>0){
-			console.log("Match: " + results + " is in the document");
-		} else{
-			console.log("Try harder");
-			//return -1;
-		}
-
-	}
+  		if (results.length>0){
+  			console.log("Match: " + results + " is in the document");
+  		} else{
+  			console.log("Try harder");
+  			//return -1;
+  		};
+  	};
+    else if(typeof searchIndex == 'string'){
+      searchIndex.split(' ');
+    }
+  }
 
 }
