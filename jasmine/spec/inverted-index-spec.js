@@ -23,7 +23,7 @@ describe('testObj', function(){
 
 			it('reads json file and asserts file is not empty', function(){
 				expect(testObj.arr).toBeTruthy();
-				expect(testObj.arr.length).not.toBe(0);
+				expect(testObj.arr.length).toBeGreaterThan(0);
 				expect(typeof testObj).toEqual('object');
 			});
 		});
