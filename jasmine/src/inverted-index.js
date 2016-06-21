@@ -13,8 +13,8 @@ function Index(){
     */
   return fetch(filepath).then(function(response){
       return response.text();
-  	}).then(function(data){
       var self = this;
+  	}).then(function(data){
       self.arr = JSON.parse(data);
       return self.arr;
   	});
@@ -59,7 +59,7 @@ function Index(){
   };
 
 	this.getIndex = function(){
-  
+
     for(var index=0; index<this.arr.length; index++){
 
   		var str = '';
