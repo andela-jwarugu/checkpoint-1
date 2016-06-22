@@ -7,7 +7,9 @@ describe('testObj', function(){
 		it('Ensure inverted index container is empty', function(){
 			expect(testObj.arr).toBeUndefined();
 		});
+
 	});
+
 
 	describe('everything else', function(){
 
