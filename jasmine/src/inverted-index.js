@@ -106,7 +106,6 @@ function Index() {
 
     var results = [];
     var term;
-    var self = this;
 
     if (!Array.isArray(searchItems) && typeof searchItems !== 'string') {
       return "Invalid Input";
@@ -117,15 +116,15 @@ function Index() {
       for (var i = 0; i < searchItems.length; i++) {
 
         term = searchItems[i];
-        if (!self.invertedIndex.hasOwnProperty(term)) {
+        if (!this.invertedIndex.hasOwnProperty(term)) {
           results.push(-1);
           continue;
         }
 
-        if (self.invertedIndex[term].length === 1) {
-          results.push(self.invertedIndex[term][0]);
+        if (this.invertedIndex[term].length === 1) {
+          results.push(this.invertedIndex[term][0]);
         } else {
-          results.push(self.invertedIndex[term]);
+          results.push(this.invertedIndex[term]);
         }
 
 
@@ -140,15 +139,15 @@ function Index() {
 
         term = arguments[i];
 
-        if (!self.invertedIndex.hasOwnProperty(term)) {
+        if (!this.invertedIndex.hasOwnProperty(term)) {
           results.push(-1);
           continue;
         }
 
-        if (self.invertedIndex[term].length === 1) {
-          results.push(self.invertedIndex[term][0]);
+        if (this.invertedIndex[term].length === 1) {
+          results.push(this.invertedIndex[term][0]);
         } else {
-          results.push(self.invertedIndex[term]);
+          results.push(this.invertedIndex[term]);
         }
 
 
