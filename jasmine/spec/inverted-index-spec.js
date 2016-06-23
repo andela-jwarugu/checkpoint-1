@@ -3,9 +3,9 @@ describe('testObj', function() {
   var testObj = new Index(),
     path = '/jasmine/books.json';
 
-  describe('emptyIndex', function() {
+  describe('Empty file container', function() {
 
-    it('Ensure file container is empty', function() {
+    it('ensure file container is empty', function() {
       expect(testObj.arr).toBeUndefined();
     });
 
@@ -27,14 +27,16 @@ describe('testObj', function() {
       it('reads json file and asserts file is not empty', function() {
         expect(testObj.arr).toBeTruthy();
         expect(testObj.arr.length).toBeGreaterThan(0);
-        expect(typeof testObj.arr).toEqual('object');
+        expect(Array.isArray(testObj.arr)).toBeTruthy();
       });
     });
 
     describe('Populate index', function() {
 
       it('ensures that an index object is created', function() {
-        expect(typeof testObj.getIndex()).toBe('object');
+        expect(typeof testObj.getIndex() === 'object' &&
+          !Array.isArray(testObj.getIndex()) &&
+          testObj !== null).toBeTruthy();
       });
 
       it('ensures that index created is correct', function() {
@@ -43,7 +45,7 @@ describe('testObj', function() {
       });
     });
 
-    describe('searchIndex', function() {
+    describe('Search index', function() {
 
       it('ensures that search returns an array', function() {
         expect(Array.isArray(testObj.searchIndex('alice'))).toBeTruthy();
@@ -71,6 +73,7 @@ describe('testObj', function() {
 				function(){
 
 					expect(testObj.searchIndex(900)).toBe('Invalid Input');
+          expect(testObj.searchIndex({'alice': 1})).toBe('Invalid Input');
 
         });
     });

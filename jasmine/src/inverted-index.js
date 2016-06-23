@@ -3,22 +3,22 @@ function Index() {
 
 	this.invertedIndex = {};
 
-	this.createIndex = function(filepath) {
+	this.createIndex = function (filepath) {
 		/*
 
 		  createIndex method reads the contents of a file whose path is passed as an
 		  argument in the method. The method returns a promise.
 
 		*/
-		return fetch(filepath).then(function(response) {
+		return fetch(filepath).then(function (response) {
 			return response.text();
-		}).then(function(data) {
+		}).then(function (data) {
 			var jsonObject = JSON.parse(data);
 			return jsonObject;
 		});
 	};
 
-	this.formatContent = function(content) {
+	this.formatContent = function (content) {
 		/*
 
 		  This method removes stop words and punctuation marks and returns an array
@@ -55,16 +55,16 @@ function Index() {
 			.replace(/\,/gi, '\\b|\\b') + '\\b';
 		var re = new RegExp(stopString, 'gi');
 		var doc = content.replace(/\W+/gi, ' ').replace(re, ' ')
-			.replace(/\s(?=\s)/gi, '').trim().toLowerCase().split(' ');
+			.trim().toLowerCase().split(' ');
 		return doc;
 	};
 
-	this.getIndex = function() {
+	this.getIndex = function () {
 
 		function getKeys(obj) {
 			var str = '';
 
-			Object.keys(obj).map(function(key) {
+			Object.keys(obj).map(function (key) {
 				str += ' ' + (obj[key]);
 			});
 
@@ -94,7 +94,7 @@ function Index() {
 		return indexObj;
 	};
 
-	this.searchIndex = function(searchItems) {
+	this.searchIndex = function (searchItems) {
 		/*
 
 		  When a search item is passed into the method it returns an array of that
@@ -103,52 +103,33 @@ function Index() {
 		*/
 
 		var results = [];
-		var term;
+		var terms = [];
 
 		if (!Array.isArray(searchItems) && typeof searchItems !== 'string') {
 			return 'Invalid Input';
 		}
 
-		if (Array.isArray(searchItems)) {
-
-			for (var i = 0; i < searchItems.length; i++) {
-				console.log(searchItems);
-
-				term = searchItems[i];
-				if (!this.invertedIndex.hasOwnProperty(term)) {
-					results.push(-1);
-				} else {
-					if (this.invertedIndex[term].length === 1) {
-						results.push(this.invertedIndex[term][0]);
-					} else {
-						results.push(this.invertedIndex[term]);
-					}
-				}
+		if(!Array.isArray(searchItems)) {
+			for (var key in arguments) {
+				terms.push(arguments[key]);
 			}
-
+		} else {
+			terms = searchItems;
 		}
 
+		for (var i = 0; i < terms.length; i++) {
 
-		if (typeof searchItems === 'string') {
-			console.log('arg:' + arguments);
-			var len = arguments.length;
-			for (var i = 0; i < len; i++) {
-
-				term = arguments[i];
-				console.log('term:' + term);
-				if (!this.invertedIndex.hasOwnProperty(term)) {
-					results.push(-1);
-
+			if (!this.invertedIndex.hasOwnProperty(terms[i])) {
+				results.push(-1);
+			} else {
+				if (this.invertedIndex[terms[i]].length === 1) {
+					results.push(this.invertedIndex[terms[i]][0]);
 				} else {
-					if (this.invertedIndex[term].length === 1) {
-						results.push(this.invertedIndex[term][0]);
-					} else {
-						results.push(this.invertedIndex[term]);
-					}
+					results.push(this.invertedIndex[terms[i]]);
 				}
 			}
 		}
-		console.log(results);
+
 		return results;
 
 	};
