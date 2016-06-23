@@ -54,19 +54,19 @@ describe('testObj', function() {
       it('ensures the correct results when a single term is searched',
         function() {
 
-          expect(testObj.searchIndex('alice')).toEqual([0]);
-          expect(testObj.searchIndex('alliance')).toEqual([1]);
-          expect(testObj.searchIndex('joy')).toEqual([-1]);
+          expect(testObj.searchIndex('alice')).toEqual([[0]]);
+          expect(testObj.searchIndex('alliance')).toEqual([[1]]);
+          expect(testObj.searchIndex('joy')).toEqual([[-1]]);
         });
 
       it('ensures the correct results when multiple terms are searched',
         function() {
           // array
-          expect(testObj.searchIndex(['alice', 'lord'])).toEqual([0, 1]);
+          expect(testObj.searchIndex(['alice', 'lord'])).toEqual([[0], [1]]);
 
           // multiple arguments
           expect(testObj.searchIndex('alice', 'lord', 'joy'))
-            .toEqual([0, 1, -1]);
+            .toEqual([[0], [1], [-1]]);
 					});
 
 			it('ensures that search items allowable are only strings or arrays',
