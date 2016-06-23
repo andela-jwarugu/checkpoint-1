@@ -5,7 +5,7 @@ describe('testObj', function() {
 
   describe('emptyIndex', function() {
 
-    it('Ensure inverted index container is empty', function() {
+    it('Ensure file container is empty', function() {
       expect(testObj.arr).toBeUndefined();
     });
 
@@ -27,7 +27,7 @@ describe('testObj', function() {
       it('reads json file and asserts file is not empty', function() {
         expect(testObj.arr).toBeTruthy();
         expect(testObj.arr.length).toBeGreaterThan(0);
-        expect(typeof testObj).toEqual('object');
+        expect(typeof testObj.arr).toEqual('object');
       });
     });
 
@@ -65,6 +65,12 @@ describe('testObj', function() {
           // multiple arguments
           expect(testObj.searchIndex('alice', 'lord', 'joy'))
             .toEqual([0, 1, -1]);
+					});
+
+			it('ensures that search items allowable are only strings or arrays',
+				function(){
+
+					expect(testObj.searchIndex(900)).toBe('Invalid Input');
 
         });
     });
