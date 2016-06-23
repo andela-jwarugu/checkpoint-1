@@ -3,22 +3,22 @@ function Index() {
 
 	this.invertedIndex = {};
 
-	this.createIndex = function (filepath) {
+	this.createIndex = function(filepath) {
 		/*
 
 		  createIndex method reads the contents of a file whose path is passed as an
 		  argument in the method. The method returns a promise.
 
 		*/
-		return fetch(filepath).then(function (response) {
+		return fetch(filepath).then(function(response) {
 			return response.text();
-		}).then(function (data) {
+		}).then(function(data) {
 			var jsonObject = JSON.parse(data);
 			return jsonObject;
 		});
 	};
 
-	this.formatContent = function (content) {
+	this.formatContent = function(content) {
 		/*
 
 		  This method removes stop words and punctuation marks and returns an array
@@ -65,12 +65,12 @@ function Index() {
 		return doc;
 	};
 
-	this.getIndex = function () {
+	this.getIndex = function() {
 
 		function getValues(obj) {
 			var str = '';
 
-			Object.keys(obj).map(function (key) {
+			Object.keys(obj).map(function(key) {
 				str += ' ' + obj[key];
 			});
 
@@ -100,7 +100,7 @@ function Index() {
 		return indexObj;
 	};
 
-	this.searchIndex = function (searchItems) {
+	this.searchIndex = function(searchItems) {
 		/*
 
 		  When a search item is passed into the method it returns an array of that
@@ -115,7 +115,7 @@ function Index() {
 			return 'Invalid Input';
 		}
 
-		if(!Array.isArray(searchItems)) {
+		if (!Array.isArray(searchItems)) {
 			for (var key in arguments) {
 				terms.push(arguments[key]);
 			}
@@ -126,13 +126,9 @@ function Index() {
 		for (var i = 0; i < terms.length; i++) {
 
 			if (!this.invertedIndex.hasOwnProperty(terms[i])) {
-				results.push(-1);
+				results.push([-1]);
 			} else {
-				if (this.invertedIndex[terms[i]].length === 1) {
-					results.push(this.invertedIndex[terms[i]][0]);
-				} else {
-					results.push(this.invertedIndex[terms[i]]);
-				}
+				results.push(this.invertedIndex[terms[i]]);
 			}
 		}
 
