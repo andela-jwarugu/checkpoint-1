@@ -54,6 +54,12 @@ function Index() {
 		var stopString = '\\b' + stopWords.toString()
 			.replace(/\,/gi, '\\b|\\b') + '\\b';
 		var re = new RegExp(stopString, 'gi');
+
+		/*
+			Replaces punctuaion marks and the regExp containing stopwords with a
+			single space and splits the string by spaces returning an array of words.
+
+		*/
 		var doc = content.replace(/\W+/gi, ' ').replace(re, ' ')
 			.trim().toLowerCase().split(' ');
 		return doc;
@@ -61,11 +67,11 @@ function Index() {
 
 	this.getIndex = function () {
 
-		function getKeys(obj) {
+		function getValues(obj) {
 			var str = '';
 
 			Object.keys(obj).map(function (key) {
-				str += ' ' + (obj[key]);
+				str += ' ' + obj[key];
 			});
 
 			return str;
@@ -75,9 +81,9 @@ function Index() {
 		for (var index = 0; index < this.arr.length; index++) {
 
 
-			var str = getKeys(this.arr[index]);
+			var fileContents = getValues(this.arr[index]);
 
-			var doc = this.formatContent(str);
+			var doc = this.formatContent(fileContents);
 
 			for (var i = 0; i < doc.length; i++) {
 				var exist = indexObj.hasOwnProperty(doc[i]);
