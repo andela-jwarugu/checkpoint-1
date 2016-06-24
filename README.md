@@ -7,7 +7,7 @@ This is an inverted index object that takes a JSON array of text objects and cre
 
 ### createIndex(filepath)
 
-This method returns a promise. It reads the contents of the file specified in the filepath and returns to the promise this data in a variable dubbed `arr`.
+This method returns a promise. It reads the contents of the file specified in the filepath and returns to the promise this data in a variable dubbed `jsonObj`.
 
 ### getIndex()
 
@@ -15,6 +15,30 @@ This method simply returns an inverted index object. It takes calls the data fro
 
 ### searchIndex(searchItems)
 
-This method searches for the searchItems passed as an argument and returns an array of numbers. The numbers indicate the position of each item in the file.
+This method searches for the searchItems passed as an argument and returns an array of arrays. The arrays indicate the position of each item in the file.
 
-The searchItems could be an array or a string(s).
+The searchItems could be an array or a string(s). 
+
+## Tests
+
+### Empty file container
+
+Ensures that the container in which we'll pass the file contents is empty when the Index object is instantiated.
+
+### Read book data
+
+Ensures JSON array is not empty.
+
+### Populate index
+
+Ensures index is created once JSON file has been read.
+
+Ensures index is correct.
+
+### Search index
+
+Ensures index returns the correct results when searched.
+
+## Conclusion 
+
+Happy coding. Just clone the repo and go crazy!!
