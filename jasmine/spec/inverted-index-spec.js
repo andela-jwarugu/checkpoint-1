@@ -56,10 +56,7 @@ describe('testObj', function() {
 
       it('ensures the correct results when multiple terms are searched',
         function() {
-          // array
           expect(testObj.searchIndex(['alice', 'lord'])).toEqual([[0], [1]]);
-
-          // multiple arguments
           expect(testObj.searchIndex('alice', 'lord', 'joy'))
             .toEqual([[0], [1], [-1]]);
 					});
