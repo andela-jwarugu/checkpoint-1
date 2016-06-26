@@ -8,12 +8,10 @@ describe('testObj', function() {
     it('ensure file container is empty', function() {
       expect(testObj.arr).toBeUndefined();
     });
-
   });
 
 
   describe('everything else', function() {
-
     beforeEach(function(done) {
       testObj.createIndex(path).then(function(data) {
         testObj.arr = data;
@@ -23,7 +21,6 @@ describe('testObj', function() {
     });
 
     describe('Read book data', function() {
-
       it('reads json file and asserts file is not empty', function() {
         expect(testObj.arr).toBeTruthy();
         expect(testObj.arr.length).toBeGreaterThan(0);
@@ -32,7 +29,6 @@ describe('testObj', function() {
     });
 
     describe('Populate index', function() {
-
       it('ensures that an index object is created', function() {
         expect(typeof testObj.getIndex() === 'object' &&
           !Array.isArray(testObj.getIndex()) &&
@@ -53,7 +49,6 @@ describe('testObj', function() {
 
       it('ensures the correct results when a single term is searched',
         function() {
-
           expect(testObj.searchIndex('alice')).toEqual([[0]]);
           expect(testObj.searchIndex('alliance')).toEqual([[1]]);
           expect(testObj.searchIndex('joy')).toEqual([[-1]]);
@@ -71,7 +66,6 @@ describe('testObj', function() {
 
 			it('ensures that search items allowable are only strings or arrays',
 				function(){
-
 					expect(testObj.searchIndex(900)).toBe('Invalid Input');
           expect(testObj.searchIndex({'alice': 1})).toBe('Invalid Input');
 
